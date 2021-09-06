@@ -1,0 +1,71 @@
+# Çoğu proje için bu iş akışı dosyasının değiştirilmesi gerekmez; sadece ihtiyacın var
+# deponuza işlemek için.
+#
+# Analiz edilen dil grubunu geçersiz kılmak için bu dosyayı değiştirmek isteyebilirsiniz,
+# veya özel sorgular sağlamak veya mantık oluşturmak için.
+#
+# ******** NOT ********
+# Deponuzdaki dilleri tespit etmeye çalıştık. lütfen kontrol edin
+# doğru dil kümesine sahip olduğunuzu doğrulamak için aşağıda tanımlanan "dil" matrisi
+# desteklenen CodeQL dili.
+#
+name: "CodeQL"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    # Aşağıdaki dallar, yukarıdaki dalların bir alt kümesi olmalıdır
+    branches: [ main ]
+  schedule:
+    - cron: '29 14 * * 3'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript' ]
+        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
+        # Learn more:
+        # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # Tarama için CodeQL araçlarını başlatır.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: ${{ matrix.language }}
+        # Özel sorgular belirtmek isterseniz, bunu burada veya bir yapılandırma dosyasında yapabilirsiniz.
+        # Varsayılan olarak, burada listelenen sorgular, bir yapılandırma dosyasında belirtilenleri geçersiz kılar.
+        # Bu sorguları ve yapılandırma dosyasındakileri kullanmak için listenin önüne "+" ekleyin.
+        # sorgu: ./path/to/local/query, kuruluşunuz/reponuz/queries@main
+
+    # Otomatik derleme, derlenmiş dilleri (C/C++, C# veya Java) oluşturmaya çalışır.
+    # Bu adım başarısız olursa, onu kaldırmalı ve yapıyı manuel olarak çalıştırmalısınız (aşağıya bakın)
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v1
+
+    # ℹ️ İşletim sistemi kabuğunu kullanarak çalıştırılacak komut satırı programları.
+    # 📚 https://git.io/JvXDl
+
+    # ✏️ Autobuild yukarıda başarısız olursa, kaldırın ve aşağıdaki üç satırın yorumunu kaldırın
+    # ve projeniz varsa kodunuzu oluşturmak için bunları değiştirin (veya daha fazlasını ekleyin)
+    # derlenmiş bir dil kullanır
+
+    #- run: |
+    #   make bootstrap
+    #   make release
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
