@@ -4,34 +4,34 @@ async function rps(message, options = []) {
     try{
         if(options.slash === true){
             let opponent = message.options.getUser('user')
-            if (!opponent) return message.followUp({ content: 'No opponent mentioned!', ephemeral: true})
-            if (opponent.id == message.user.id) return message.followUp({ content: 'You cannot play by yourself!', ephemeral: true})
+            if (!opponent) return message.followUp({ content: 'Rakipten bahsedilmedi!', ephemeral: true})
+            if (opponent.id == message.user.id) return message.followUp({ content: 'Kendi başına oynayamazsın!', ephemeral: true})
             if (options.credit === false) {
-                foot = options.embedFooter || "Rock Paper Scissors"
+                foot = options.embedFooter || "Taş kağıt makas"
             } else {
-                foot = "©️ Simply Develop. | By- ImpassiveMoon + Rahuletto"
+                foot = "©️ Sadece Geliştirin. | By- Dk Emre 30#8590"
             }
         
             let acceptEmbed = new Discord.MessageEmbed()
-                .setTitle(`Waiting for ${opponent.tag} to accept!`)
+                .setTitle(`Kabul etmek için ${opponent.tag} bekleniyor!`)
                 .setAuthor(message.user.tag, message.user.displayAvatarURL())
                 .setColor(options.embedColor || 0x075FFF)
                 .setFooter(foot)
         
             let accept = new Discord.MessageButton()
-                .setLabel('Accept')
+                .setLabel('Kabul et')
                 .setStyle('SUCCESS')
                 .setCustomId('accept')
         
             let decline = new Discord.MessageButton()
-                .setLabel('Decline')
+                .setLabel('Reddet')
                 .setStyle('DANGER')
                 .setCustomId('decline')
         
             let accep = new Discord.MessageActionRow()
                 .addComponents([accept, decline])
             message.followUp({
-              content: `Hey <@${opponent.id}>. You got a RPS invite`,
+              content: `Merhaba <@${opponent.id}>. Bir Taş Kağıt Makas Oyunu davetiniz var!`,
                 embeds: [acceptEmbed],
                 components: [accep]
             })
@@ -49,7 +49,7 @@ async function rps(message, options = []) {
                         .setTitle(`${message.user.tag} VS. ${opponent.tag}`)
                         .setColor(options.embedColor || 0x075FFF)
                         .setFooter(foot)
-                        .setDescription("Select 🪨, 📄, or ✂️")
+                        .setDescription(", 📄 veya ✂️ seçin")
         
                     if (options.rockColor === 'grey') {
                         options.rockColor = 'SECONDARY'
@@ -62,7 +62,7 @@ async function rps(message, options = []) {
                     }
         
                     let rock = new Discord.MessageButton()
-                        .setLabel('ROCK')
+                        .setLabel('TAŞ')
                         .setCustomId('rock')
                         .setStyle(options.rockColor || 'SECONDARY')
                         .setEmoji("🪨")
@@ -78,7 +78,7 @@ async function rps(message, options = []) {
                     }
         
                     let paper = new Discord.MessageButton()
-                        .setLabel('PAPER')
+                        .setLabel('KAĞIT')
                         .setCustomId('paper')
                         .setStyle(options.paperColor || 'SECONDARY')
                         .setEmoji("📄")
@@ -94,7 +94,7 @@ async function rps(message, options = []) {
                     }
         
                     let scissors = new Discord.MessageButton()
-                        .setLabel('SCISSORS')
+                        .setLabel('MAKAS')
                         .setCustomId('scissors')
                         .setStyle(options.scissorsColor || 'SECONDARY')
                         .setEmoji("✂️")
@@ -238,12 +238,12 @@ async function rps(message, options = []) {
         .setFooter(foot)
 
     let accept = new Discord.MessageButton()
-        .setLabel('Accept')
+        .setLabel('Kabut Et')
         .setStyle('SUCCESS')
         .setCustomId('accept')
 
     let decline = new Discord.MessageButton()
-        .setLabel('Decline')
+        .setLabel('Reddet')
         .setStyle('DANGER')
         .setCustomId('decline')
 
@@ -278,7 +278,7 @@ async function rps(message, options = []) {
             }
 
             let rock = new Discord.MessageButton()
-                .setLabel('ROCK')
+                .setLabel('TAŞ')
                 .setCustomId('rock')
                 .setStyle(options.rockColor || 'SECONDARY')
                 .setEmoji("🪨")
@@ -294,7 +294,7 @@ async function rps(message, options = []) {
             }
 
             let paper = new Discord.MessageButton()
-                .setLabel('PAPER')
+                .setLabel('KAĞIT')
                 .setCustomId('paper')
                 .setStyle(options.paperColor || 'SECONDARY')
                 .setEmoji("📄")
@@ -310,7 +310,7 @@ async function rps(message, options = []) {
             }
 
             let scissors = new Discord.MessageButton()
-                .setLabel('SCISSORS')
+                .setLabel('MAKAS')
                 .setCustomId('scissors')
                 .setStyle(options.scissorsColor || 'SECONDARY')
                 .setEmoji("✂️")
@@ -344,9 +344,9 @@ async function rps(message, options = []) {
             collect.on('end', (c, reason) => {
                 if (reason == 'time') {
                     let embed = new Discord.MessageEmbed()
-                        .setTitle('Game Timed Out!')
+                        .setTitle('Oyun Zaman aşımına uğradı!')
                         .setColor(options.timeoutEmbedColor || 0xc90000)
-                        .setDescription('One or more players did not make a move in time(30s)')
+                        .setDescription('Bir veya daha fazla oyuncu zamanında hamle yapmadı(30s)')
                         .setFooter(foot)
                     m.edit({
                         embeds: [embed],
@@ -355,54 +355,54 @@ async function rps(message, options = []) {
                 } else {
                     if (mem == 'rock' && auth == 'scissors') {
                         let embed = new Discord.MessageEmbed()
-                            .setTitle(`${opponent.user.tag} Wins!`)
+                            .setTitle(`${opponent.user.tag} Kazandı!`)
                             .setColor(options.winEmbedColor || 0x06bd00)
-                            .setDescription('Rock defeats Scissors')
+                            .setDescription('Taş, Makas'ı yendi')
                             .setFooter(foot)
                         m.edit({ embeds: [embed], components: [] })
                     } else if (mem == 'scissors' && auth == 'rock') {
                         let embed = new Discord.MessageEmbed()
-                            .setTitle(`${message.member.user.tag} Wins!`)
+                            .setTitle(`${message.member.user.tag} Kazandı!`)
                             .setColor(options.winEmbedColor || 0x06bd00)
-                            .setDescription('Rock defeats Scissors')
+                            .setDescription('Taş, Makas'ı yendi')
                             .setFooter(foot)
                         m.edit({ embeds: [embed], components: [] })
                     }
                     else if (mem == 'scissors' && auth == 'paper') {
                         let embed = new Discord.MessageEmbed()
-                            .setTitle(`${opponent.user.tag} Wins!`)
+                            .setTitle(`${opponent.user.tag} Kazandı!`)
                             .setColor(options.winEmbedColor || 0x06bd00)
-                            .setDescription('Scissors defeats Paper')
+                            .setDescription('Makas Kağıdı yendi')
                             .setFooter(foot)
                         m.edit({ embeds: [embed], components: [] })
                     } else if (mem == 'paper' && auth == 'scissors') {
                         let embed = new Discord.MessageEmbed()
-                            .setTitle(`${message.member.user.tag} Wins!`)
+                            .setTitle(`${message.member.user.tag} Kazandı!`)
                             .setColor(options.winEmbedColor || 0x06bd00)
-                            .setDescription('Scissors defeats Paper')
+                            .setDescription('Makas Kağıdı yendi')
                             .setFooter(foot)
                         m.edit({ embeds: [embed], components: [] })
                     }
                     else if (mem == 'paper' && auth == 'rock') {
                         let embed = new Discord.MessageEmbed()
-                            .setTitle(`${opponent.user.tag} Wins!`)
+                            .setTitle(`${opponent.user.tag} Kazandı!`)
                             .setColor(options.winEmbedColor || 0x06bd00)
-                            .setDescription('Paper defeats Rock')
+                            .setDescription('Kağıt Taş'ı yendi')
                             .setFooter(foot)
                         m.edit({ embeds: [embed], components: [] })
                     } else if (mem == 'rock' && auth == 'paper') {
                         let embed = new Discord.MessageEmbed()
-                            .setTitle(`${message.member.user.tag} Wins!`)
+                            .setTitle(`${message.member.user.tag} Kazandı!`)
                             .setColor(options.winEmbedColor || 0x06bd00)
-                            .setDescription('Paper defeats Rock')
+                            .setDescription('Kağıt Taş'ı yendi')
                             .setFooter(foot)
                         m.edit({ embeds: [embed], components: [] })
                     }
                     else {
                         let embed = new Discord.MessageEmbed()
-                            .setTitle('Draw!')
+                            .setTitle('Çizmek!')
                             .setColor(options.winEmbedColor || 0x06bd00)
-                            .setDescription(`Both players chose ${mem}`)
+                            .setDescription(`Her iki oyuncu da ${mem}'i seçti`)
                             .setFooter(foot)
                         m.edit({ embeds: [embed], components: [] })
                     }
@@ -412,11 +412,11 @@ async function rps(message, options = []) {
         collector.on('end', (collected, reason) => {
             if (reason == 'time') {
                 let embed = new Discord.MessageEmbed()
-                    .setTitle('Challenge Not Accepted in Time')
+                    .setTitle('Meydan Okuma Zamanında Kabul Edilmedi')
                     .setAuthor(message.author.tag, message.author.displayAvatarURL())
                     .setColor(options.timeoutEmbedColor || 0xc90000)
                     .setFooter(foot)
-                    .setDescription('Ran out of time!\nTime limit: 30s')
+                    .setDescription('Süre doldu!\nSüre sınırı: 30s')
                 m.edit({
                     embeds: [embed],
                     components: []
@@ -424,11 +424,11 @@ async function rps(message, options = []) {
             }
             if (reason == 'decline') {
                 let embed = new Discord.MessageEmbed()
-                    .setTitle("Game Declined!")
+                    .setTitle("Oyun Reddedildi!")
                     .setAuthor(message.author.tag, message.author.displayAvatarURL())
                     .setColor(options.timeoutEmbedColor || 0xc90000)
                     .setFooter(foot)
-                    .setDescription(`${opponent.user.tag} has declined your game!`)
+                    .setDescription(`${opponent.user.tag} oyununuzu reddetti!`)
                 m.edit({
                     embeds: [embed],
                     components: []
@@ -438,7 +438,7 @@ async function rps(message, options = []) {
     })
 }
 } catch(err){
-    console.log(`Error Occured. | rps | Error: ${err}`)
+    console.log(`Hata oluştu. | rps | Hata: ${err}`)
 }
 }
 module.exports = rps;
